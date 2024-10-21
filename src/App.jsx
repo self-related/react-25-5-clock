@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import './App.css'
 
-function Buttons(props) {
+function Buttons({ isCounting, changeCountingMode }) {
+  const countingClassName = isCounting ? 'counting' : '';
+  
+  const handleStartStopClick = (_event) => {
+    changeCountingMode();
+  };
 
   return (
     <div id='buttons'>
-      <button>Start/Stop</button>
+      <button className={countingClassName} onClick={handleStartStopClick}>Start/Stop</button>
       <button>Reset</button>
     </div>
   );
@@ -51,6 +56,10 @@ function App() {
   const [isSession, setIsSession] = useState(true);
   const [isCounting, setIsCounting] = useState(false);
 
+  const changeCountingMode = () => {
+    setIsCounting( (isCounting) => !isCounting );
+  };
+
   const changeTime = (timeToChange, changeMode) => {
     const setTime = timeToChange === 'session' ? setSessionTime : setBreakTime;
     if (changeMode === "+") {
@@ -71,7 +80,7 @@ function App() {
       <h1>25-5 Clock</h1>
       <Controls breakTime={breakTime} sessionTime={sessionTime} changeTime={changeTime}/>
       <Timer breakTime={breakTime} sessionTime={sessionTime} isSession={isSession} isCounting={isCounting}/>
-      <Buttons />
+      <Buttons isCounting={isCounting} changeCountingMode={changeCountingMode}/>
     </div>
   )
 }

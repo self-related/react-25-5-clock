@@ -61,6 +61,8 @@ function App() {
   };
 
   const changeTime = (timeToChange, changeMode) => {
+    if (isCounting) { return; }
+    
     const setTime = timeToChange === 'session' ? setSessionTime : setBreakTime;
     if (changeMode === "+") {
       setTime((time) => time + 60_000);

@@ -11,11 +11,11 @@ function Buttons(props) {
   );
 }
 
-function Timer({ breakTime, sessionTime, mode}) {
+function Timer({ breakTime, sessionTime, isSession, isCounting}) {
 
   return (
     <div id='timer' className='center'>
-      <p id='timer-label'>{mode}</p>
+      <p id='timer-label'>{isSession == true ? 'Session' : 'Break'}</p>
       <div id='time-left'>00:00</div>
     </div>
   );
@@ -44,14 +44,14 @@ function Controls({ breakTime, sessionTime }) {
 function App() {
   const [breakTime, setBreakTime] = useState(0);
   const [sessionTime, setSessionTime] = useState(0);
-  const [mode, setMode] = useState('Session');
-
+  const [isSession, setIsSession] = useState(true);
+  const [isCounting, setIsCounting] = useState(false);
 
   return (
     <div id="app">
       <h1>25-5 Clock</h1>
       <Controls breakTime={breakTime} sessionTime={sessionTime}/>
-      <Timer breakTime={breakTime} sessionTime={sessionTime} mode={mode}/>
+      <Timer breakTime={breakTime} sessionTime={sessionTime} isSession={isSession} isCounting={isCounting}/>
       <Buttons />
     </div>
   )

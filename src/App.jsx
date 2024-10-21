@@ -21,36 +21,55 @@ function Timer({ breakTime, sessionTime, isSession, isCounting}) {
   );
 }
 
-function Controls({ breakTime, sessionTime }) {
+function Controls({ breakTime, sessionTime, changeTime }) {
+  const handleClick = (timeToChange, changeMode) => (_event) => {
+    changeTime(timeToChange, changeMode);
+  };
+
 
   return (
     <div id='controls' className='center'>
       <div>
         <p>Break Length</p>
-        <button id='break-decrement'>-</button>
+        <button id='break-decrement' onClick={handleClick('break', '-')}>-</button>
         <span id='break-length'>{breakTime}</span>
-        <button id='break-decrement'>+</button>
+        <button id='break-increment' onClick={handleClick('break', '+')}>+</button>
       </div>
       <div>
         <p>Session Length</p>
-        <button id='session-decrement'>-</button>
+        <button id='session-decrement' onClick={handleClick('session', '-')}>-</button>
         <span id='session-length'>{sessionTime}</span>
-        <button id='session-decrement'>+</button>
+        <button id='session-increment' onClick={handleClick('session', '+')}>+</button>
       </div>
     </div>
   );
 }
 
 function App() {
-  const [breakTime, setBreakTime] = useState(0);
   const [sessionTime, setSessionTime] = useState(0);
+  const [breakTime, setBreakTime] = useState(0);
   const [isSession, setIsSession] = useState(true);
   const [isCounting, setIsCounting] = useState(false);
+
+  const changeTime = (timeToChange, changeMode) => {
+    const setTime = timeToChange === 'session' ? setSessionTime : setBreakTime;
+    if (changeMode === "+") {
+      setTime((time) => time + 60_000);
+    } else {
+      setTime((time) => {
+        if (time >= 60_000) {
+          return time - 60_000;
+        } else {
+          return 0;
+        }
+      });
+    }
+  };
 
   return (
     <div id="app">
       <h1>25-5 Clock</h1>
-      <Controls breakTime={breakTime} sessionTime={sessionTime}/>
+      <Controls breakTime={breakTime} sessionTime={sessionTime} changeTime={changeTime}/>
       <Timer breakTime={breakTime} sessionTime={sessionTime} isSession={isSession} isCounting={isCounting}/>
       <Buttons />
     </div>

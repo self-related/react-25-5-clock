@@ -57,7 +57,7 @@ function Controls({ breakTime, sessionTime, changeTime }) {
     </div>
   );
 }
-const beep = new Audio('https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav');
+//const beep = new Audio('https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav');
 function App() {
   const [sessionTime, setSessionTime] = useState(1_500_000);
   const [breakTime, setBreakTime] = useState(300_000);
@@ -65,6 +65,7 @@ function App() {
   const [isCounting, setIsCounting] = useState(false);
   const [timerTime, setTimerTime] = useState(1_500_000);
   const isCountingRef = useRef(null);
+  const audioRef = useRef();
 
   const startTimer = async () => {
     if (!isCounting) { return; }
@@ -78,7 +79,7 @@ function App() {
       }
       setIsSession(isSession => !isSession);
       /* sound */
-      beep.play();
+      audioRef.current.play();
       return;
     }
 
@@ -132,6 +133,8 @@ function App() {
     setIsCounting(false);
     setTimerTime(1_500_000);
     isCountingRef.current = false;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
   };
 
   startTimer();
@@ -142,6 +145,7 @@ function App() {
       <Controls breakTime={breakTime} sessionTime={sessionTime} changeTime={changeTime}/>
       <Timer isSession={isSession} timerTime={timerTime}/>
       <Buttons isCounting={isCounting} changeCountingMode={changeCountingMode} reset={reset}/>
+      <audio id='beep' src='https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav' ref={audioRef}></audio>
     </div>
   )
 }

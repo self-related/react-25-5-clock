@@ -1,2 +1,16 @@
-# react-25-5-clock
-5th fCC certification project
+# 25+5 Clock на React.js
+[5th freeCodeCamp "Front End Development Libraries" certification project](https://www.freecodecamp.org/certification/nekit/front-end-development-libraries)
+ 
+[Превью на codepen (не обновляется)](https://codepen.io/self-related/pen/jOgLXMO)
+
+# Возможности:
+- 2 режима: break и session
+- Когда время достигает нуля, запускается звук будильника и начинается отсчет из другого режима
+- Добавлять/убирать время можно только во время паузы
+
+# Запуск:
+```
+git clone https://github.com/self-related/react-25-5-clock.git
+npm install
+npm run dev
+```

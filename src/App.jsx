@@ -84,18 +84,34 @@ function App() {
     isCountingRef.current = !isCounting; //для таймера
   };
 
+  const changeTimerTime = (timeToChange, newTime) => {
+    console.log(timeToChange);
+    if (timeToChange === "session" && isSession 
+      || timeToChange === "break" && !isSession
+    ) {
+      setTimerTime(newTime);
+    }
+  };
+
   const changeTime = (timeToChange, changeMode) => {
     if (isCounting) { return; }
 
     const setTime = timeToChange === 'session' ? setSessionTime : setBreakTime;
     if (changeMode === "+") {
-      setTime((time) => time + 60_000);
+      setTime((time) => {
+        if (time >= 3_600_000) 
+          return 3_600_000;
+        changeTimerTime(timeToChange, time + 60_000);
+        return time + 60_000;
+      });
     } else {
       setTime((time) => {
-        if (time >= 60_000) {
+        if (time > 60_000) {
+          changeTimerTime(timeToChange, time - 60_000);
           return time - 60_000;
         } else {
-          return 0;
+          changeTimerTime(timeToChange, 60_000);
+          return 60_000;
         }
       });
     }

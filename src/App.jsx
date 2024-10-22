@@ -10,8 +10,8 @@ function Buttons({ isCounting, changeCountingMode, reset }) {
 
   return (
     <div id='buttons'>
-      <button className={countingClassName} onClick={handleStartStopClick}>Start/Stop</button>
-      <button onClick={reset}>Reset</button>
+      <button id='start_stop' className={countingClassName} onClick={handleStartStopClick}>Start/Stop</button>
+      <button id='reset' onClick={reset}>Reset</button>
     </div>
   );
 }
@@ -43,13 +43,13 @@ function Controls({ breakTime, sessionTime, changeTime }) {
   return (
     <div id='controls' className='center'>
       <div>
-        <p>Break Length</p>
+        <p id='break-label'>Break Length</p>
         <button id='break-decrement' onClick={handleClick('break', '-')}>-</button>
         <span id='break-length'>{breakTime / 60_000}</span>
         <button id='break-increment' onClick={handleClick('break', '+')}>+</button>
       </div>
       <div>
-        <p>Session Length</p>
+        <p id='session-label'>Session Length</p>
         <button id='session-decrement' onClick={handleClick('session', '-')}>-</button>
         <span id='session-length'>{sessionTime / 60_000}</span>
         <button id='session-increment' onClick={handleClick('session', '+')}>+</button>
@@ -70,7 +70,7 @@ function App() {
     if (!isCounting) { return; }
     if (breakTime < 1000 || sessionTime < 1000) { return; }
 
-    if (timerTime < 0) {
+    if (timerTime === 0) {
       if (isSession) {
         setTimerTime(breakTime);
       } else {

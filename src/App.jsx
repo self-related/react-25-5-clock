@@ -63,14 +63,14 @@ function App() {
   const [breakTime, setBreakTime] = useState(300_000);
   const [isSession, setIsSession] = useState(true);
   const [isCounting, setIsCounting] = useState(false);
-  const [timerTime, setTimerTime] = useState(sessionTime);
+  const [timerTime, setTimerTime] = useState(1_500_000);
   const isCountingRef = useRef(null);
 
   const startTimer = async () => {
     if (!isCounting) { return; }
     if (breakTime < 1000 || sessionTime < 1000) { return; }
 
-    if (timerTime === 0) {
+    if (timerTime < 0) {
       if (isSession) {
         setTimerTime(breakTime);
       } else {
@@ -130,7 +130,7 @@ function App() {
     setBreakTime(300_000);
     setIsSession(true);
     setIsCounting(false);
-    setTimerTime(sessionTime);
+    setTimerTime(1_500_000);
     isCountingRef.current = false;
   };
 

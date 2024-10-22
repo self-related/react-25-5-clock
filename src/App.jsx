@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import './App.css'
 
-function Buttons({ isCounting, changeCountingMode }) {
+function Buttons({ isCounting, changeCountingMode, reset }) {
   const countingClassName = isCounting ? 'counting' : '';
   
   const handleStartStopClick = (_event) => {
@@ -11,7 +11,7 @@ function Buttons({ isCounting, changeCountingMode }) {
   return (
     <div id='buttons'>
       <button className={countingClassName} onClick={handleStartStopClick}>Start/Stop</button>
-      <button>Reset</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
@@ -57,7 +57,7 @@ function Controls({ breakTime, sessionTime, changeTime }) {
     </div>
   );
 }
-
+const beep = new Audio('https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav');
 function App() {
   const [sessionTime, setSessionTime] = useState(1_500_000);
   const [breakTime, setBreakTime] = useState(300_000);
@@ -70,7 +70,7 @@ function App() {
     if (!isCounting) { return; }
     if (breakTime < 1000 || sessionTime < 1000) { return; }
 
-    if (timerTime === 0) {
+    if (timerTime < 0) {
       if (isSession) {
         setTimerTime(breakTime);
       } else {
@@ -78,6 +78,7 @@ function App() {
       }
       setIsSession(isSession => !isSession);
       /* sound */
+      beep.play();
       return;
     }
 
@@ -93,7 +94,6 @@ function App() {
   };
 
   const changeTimerTime = (timeToChange, newTime) => {
-    console.log(timeToChange);
     if (timeToChange === "session" && isSession 
       || timeToChange === "break" && !isSession
     ) {
@@ -125,6 +125,15 @@ function App() {
     }
   };
 
+  const reset = () => {
+    setSessionTime(1_500_000);
+    setBreakTime(300_000);
+    setIsSession(true);
+    setIsCounting(false);
+    setTimerTime(sessionTime);
+    isCountingRef.current = false;
+  };
+
   startTimer();
 
   return (
@@ -132,7 +141,7 @@ function App() {
       <h1>25-5 Clock</h1>
       <Controls breakTime={breakTime} sessionTime={sessionTime} changeTime={changeTime}/>
       <Timer isSession={isSession} timerTime={timerTime}/>
-      <Buttons isCounting={isCounting} changeCountingMode={changeCountingMode}/>
+      <Buttons isCounting={isCounting} changeCountingMode={changeCountingMode} reset={reset}/>
     </div>
   )
 }

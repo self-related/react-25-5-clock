@@ -18,10 +18,18 @@ function Buttons({ isCounting, changeCountingMode }) {
 
 function Timer({ isSession, timerTime }) {
 
+  const minutes = Math.floor(timerTime / 60_000);
+  const minutesToShow = minutes < 10 ? `0${minutes}` : minutes; //всегда две цифры для минут
+
+  const seconds = timerTime / 1_000 - minutes * 60;
+  const secondsToShow = seconds < 10 ? `0${seconds}` : seconds; //всегда две цифры для минут
+
+  
+
   return (
     <div id='timer' className='center'>
       <p id='timer-label'>{isSession == true ? 'Session' : 'Break'}</p>
-      <div id='time-left'>{timerTime}</div>
+      <div id='time-left'>{minutesToShow}:{secondsToShow}</div>
     </div>
   );
 }
@@ -37,13 +45,13 @@ function Controls({ breakTime, sessionTime, changeTime }) {
       <div>
         <p>Break Length</p>
         <button id='break-decrement' onClick={handleClick('break', '-')}>-</button>
-        <span id='break-length'>{breakTime}</span>
+        <span id='break-length'>{breakTime / 60_000}</span>
         <button id='break-increment' onClick={handleClick('break', '+')}>+</button>
       </div>
       <div>
         <p>Session Length</p>
         <button id='session-decrement' onClick={handleClick('session', '-')}>-</button>
-        <span id='session-length'>{sessionTime}</span>
+        <span id='session-length'>{sessionTime / 60_000}</span>
         <button id='session-increment' onClick={handleClick('session', '+')}>+</button>
       </div>
     </div>
@@ -51,8 +59,8 @@ function Controls({ breakTime, sessionTime, changeTime }) {
 }
 
 function App() {
-  const [sessionTime, setSessionTime] = useState(6000);
-  const [breakTime, setBreakTime] = useState(2000);
+  const [sessionTime, setSessionTime] = useState(1_500_000);
+  const [breakTime, setBreakTime] = useState(300_000);
   const [isSession, setIsSession] = useState(true);
   const [isCounting, setIsCounting] = useState(false);
   const [timerTime, setTimerTime] = useState(sessionTime);

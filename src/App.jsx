@@ -48,6 +48,10 @@ function App() {
     }
   };
 
+  const updateTimerTime = () => {
+    
+  }
+
   const adjustTime = (timeToChange, changeMode) => {
     if (isCounting) { return; }
 
@@ -72,6 +76,30 @@ function App() {
     }
   };
 
+  const updateTime = (timeToChange, value) => {
+    if (isCounting || value > 60 || isNaN(value)) { return; }
+
+    let valueMiliseconds = value * 60_000;
+
+    //если время меньше 3-х секунд - сделать 3 секунды 
+    if (valueMiliseconds < 3_000) {
+      valueMiliseconds = 3_000;
+    }
+
+    if (timeToChange === 'session-length') {
+      setSessionTime(valueMiliseconds);
+      if (isSession) {
+        setTimerTime(valueMiliseconds);
+      }
+    } else {
+      setBreakTime(valueMiliseconds);
+      if (!isSession) {
+        setTimerTime(valueMiliseconds);
+      }
+
+    }
+  };
+
   const reset = () => {
     setSessionTime(1_500_000);
     setBreakTime(300_000);
@@ -88,7 +116,7 @@ function App() {
   return (
     <div id="app">
       <h1>25-5 Clock</h1>
-      <Controls breakTime={breakTime} sessionTime={sessionTime} adjustTime={adjustTime}/>
+      <Controls breakTime={breakTime} sessionTime={sessionTime} adjustTime={adjustTime} updateTime={updateTime}/>
       <Timer isSession={isSession} timerTime={timerTime}/>
       <Buttons isCounting={isCounting} startStopTimer={startStopTimer} reset={reset}/>
       <audio id='beep' src='https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav' ref={audioRef}></audio>

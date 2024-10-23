@@ -35,7 +35,7 @@ function App() {
     }, 1000);
   };
 
-  const changeCountingMode = () => {
+  const startStopTimer = () => {
     setIsCounting( (isCounting) => !isCounting );
     isCountingRef.current = !isCounting; //для таймера
   };
@@ -48,7 +48,7 @@ function App() {
     }
   };
 
-  const changeTime = (timeToChange, changeMode) => {
+  const adjustTime = (timeToChange, changeMode) => {
     if (isCounting) { return; }
 
     const setTime = timeToChange === 'session' ? setSessionTime : setBreakTime;
@@ -88,9 +88,9 @@ function App() {
   return (
     <div id="app">
       <h1>25-5 Clock</h1>
-      <Controls breakTime={breakTime} sessionTime={sessionTime} changeTime={changeTime}/>
+      <Controls breakTime={breakTime} sessionTime={sessionTime} adjustTime={adjustTime}/>
       <Timer isSession={isSession} timerTime={timerTime}/>
-      <Buttons isCounting={isCounting} changeCountingMode={changeCountingMode} reset={reset}/>
+      <Buttons isCounting={isCounting} startStopTimer={startStopTimer} reset={reset}/>
       <audio id='beep' src='https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav' ref={audioRef}></audio>
     </div>
   )

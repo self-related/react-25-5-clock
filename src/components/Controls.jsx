@@ -1,6 +1,6 @@
-export default function Controls({ breakTime, sessionTime, changeTime }) {
+export default function Controls({ breakTime, sessionTime, adjustTime }) {
     const handleClick = (timeToChange, changeMode) => (_event) => {
-      changeTime(timeToChange, changeMode);
+      adjustTime(timeToChange, changeMode);
     };
   
   

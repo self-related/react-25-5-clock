@@ -1,8 +1,8 @@
-export default function Buttons({ isCounting, changeCountingMode, reset }) {
+export default function Buttons({ isCounting, startStopTimer, reset }) {
     const countingClassName = isCounting ? 'counting' : '';
     
     const handleStartStopClick = (_event) => {
-      changeCountingMode();
+      startStopTimer();
     };
   
     return (

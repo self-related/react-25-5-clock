@@ -1,6 +1,7 @@
 # 25+5 Clock на React.js
 
-[Превью на codepen](https://codepen.io/self-related/pen/jOgLXMO)
+
+[Превью](https://react-25-5-clock-rose.vercel.app/)
 
 [5th freeCodeCamp "Front End Development Libraries" certification project](https://www.freecodecamp.org/certification/nekit/front-end-development-libraries)
  

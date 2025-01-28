@@ -1,8 +1,9 @@
 # 25+5 Clock на React.js
+
+[Превью на codepen](https://codepen.io/self-related/pen/jOgLXMO)
+
 [5th freeCodeCamp "Front End Development Libraries" certification project](https://www.freecodecamp.org/certification/nekit/front-end-development-libraries)
  
-[Превью на codepen (не обновляется)](https://codepen.io/self-related/pen/jOgLXMO)
-
 # Возможности:
 - 2 режима: break и session
 - Когда время достигает нуля, запускается звук будильника и начинается отсчет из другого режима
